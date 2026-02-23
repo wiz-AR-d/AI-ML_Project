@@ -1,8 +1,7 @@
 #!/usr/bin/env bash
-# Build script for Render deployment
+# Build script for Render deployment (runs inside /backend)
 set -e
 
-cd backend
 pip install --upgrade pip
 pip install -r requirements.txt
 
