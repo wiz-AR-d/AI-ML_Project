@@ -1,6 +1,6 @@
 # 🔬 Pluto — NLP Research Analysis System
 
-> **Milestone 1** · Traditional NLP pipeline for analyzing 20,000 arXiv research papers
+> **Milestone 1** · Traditional NLP pipeline for analyzing 5,000 arXiv research papers
 
 [![Frontend](https://img.shields.io/badge/Frontend-Vercel-black?logo=vercel)](https://ai-ml-project-blue.vercel.app/)
 [![Backend](https://img.shields.io/badge/Backend-Render-46E3B7?logo=render)](https://render.com)
@@ -15,7 +15,7 @@ Pluto is a full-stack NLP analysis system that lets you search and analyze scien
 
 ### ✨ Features
 
-- **🔍 Keyword Search** — Search through 20,000 arXiv paper abstracts
+- **🔍 Keyword Search** — Search through 5,000 arXiv paper abstracts
 - **📊 TF-IDF Key Terms** — Extract important terms using corpus-level TF-IDF scoring
 - **🗂️ Topic Clustering** — Discover themes via Latent Dirichlet Allocation (LDA)
 - **📝 Extractive Summarization** — Generate summaries by scoring sentences with TF-IDF
@@ -55,7 +55,7 @@ Raw Abstract → Clean Text → Tokenize → Remove Stopwords → Lemmatize → 
 | **Frontend** | React 18, Vite, Vanilla CSS |
 | **Backend** | FastAPI, Uvicorn, Python 3.9+ |
 | **NLP** | NLTK, scikit-learn, NumPy, Pandas |
-| **Dataset** | arXiv (20,000 papers, bundled as JSON) |
+| **Dataset** | arXiv (5,000 papers, bundled as JSON) |
 | **Deployment** | Vercel (frontend), Render (backend) |
 
 ---

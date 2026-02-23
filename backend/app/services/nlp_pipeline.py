@@ -121,7 +121,7 @@ def full_preprocess(text: str) -> str:
 # ──────────────────────────────────────────────────────────────────────────
 
 # Path to the bundled arXiv data file
-_DATA_FILE = Path(__file__).resolve().parent.parent.parent / "data" / "arxiv_20k.json"
+_DATA_FILE = Path(__file__).resolve().parent.parent.parent / "data" / "arxiv_5k.json"
 
 
 def load_dataset():

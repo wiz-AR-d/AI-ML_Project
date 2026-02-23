@@ -64,7 +64,7 @@ export default function InputPanel({ onAnalyze, loading }) {
                 <div>
                     <div className="field-label"><span>🏷️</span> Research Topic Keywords</div>
                     <p style={{ fontSize: '0.72rem', color: 'var(--text-muted)', margin: '0 0 0.5rem 0' }}>
-                        Enter keywords to search 20,000 arXiv research papers
+                        Enter keywords to search 5,000 arXiv research papers
                     </p>
                     <div className="tag-input-row">
                         <input
