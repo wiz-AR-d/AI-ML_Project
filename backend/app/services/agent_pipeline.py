@@ -3,7 +3,7 @@ import re
 from typing import TypedDict, List, Annotated, Dict
 from langgraph.graph import StateGraph, END
 from langchain_core.messages import SystemMessage, HumanMessage
-from duckduckgo_search import DDGS
+import wikipedia
 
 import base64
 
@@ -23,11 +23,13 @@ def get_llm():
     global _llm
     if _llm is None:
         from langchain_google_genai import ChatGoogleGenerativeAI
-        import base64
-        # The API key is base64 encoded to prevent GitHub from automatically revoking it upon push.
-        _enc_key = "QUl6YVN5QWlDZUR5dC0zRGdzRndVcTZqZmNoaWM5OWhIRnNWYlRJ"
-        _key = base64.b64decode(_enc_key).decode("utf-8")
-        _llm = ChatGoogleGenerativeAI(model="gemini-2.5-flash", api_key=_key)
+        import os
+        
+        api_key = os.environ.get("GOOGLE_API_KEY")
+        if not api_key:
+            raise ValueError("GOOGLE_API_KEY environment variable is not set. Please configure it in your deployment environment.")
+            
+        _llm = ChatGoogleGenerativeAI(model="gemini-1.5-flash", api_key=api_key)
     return _llm
 
 def search_node(state: ResearchState) -> ResearchState:
@@ -38,22 +40,25 @@ def search_node(state: ResearchState) -> ResearchState:
         return {"error": "Too many searches, aborting.", "search_results": ""}
         
     try:
-        results = DDGS().text(query, max_results=5, backend="auto")
-        if not results:
-            results = DDGS().text(query, max_results=5, backend="lite")
-        if not results:
-            results = DDGS().text(query, max_results=5, backend="html")
-            
-        if not results:
-            # Fallback for strict rate limits — allow LLM to still generate report
-            return {"search_results": "No results found from DuckDuckGo. Try answering based on your internal knowledge.", "search_count": search_count + 1}
+        search_results = wikipedia.search(query, results=3)
+        if not search_results:
+            return {"search_results": "No results found from Wikipedia. Try answering based on your internal knowledge.", "search_count": search_count + 1}
         
-        # Combine snippet and URL
-        formatted_results = "\n\n".join([f"Source: {r.get('href')}\nContent: {r.get('body')}" for r in results])
-        return {"search_results": formatted_results, "search_count": search_count + 1, "error": state.get("error", "")}
+        formatted_results = []
+        for title in search_results:
+            try:
+                page = wikipedia.page(title, auto_suggest=False)
+                formatted_results.append(f"Source: {page.url}\nContent: {page.summary[:1500]}")
+            except Exception:
+                continue
+                
+        if not formatted_results:
+            return {"error": "Search failed to extract readable content.", "search_results": ""}
+            
+        final_results = "\n\n".join(formatted_results)
+        return {"search_results": final_results, "search_count": search_count + 1, "error": state.get("error", "")}
     except Exception as e:
         return {"error": f"Search failed: {str(e)}", "search_results": ""}
-
 
 def summarize_node(state: ResearchState) -> ResearchState:
     if state.get("error"):
