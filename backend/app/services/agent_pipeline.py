@@ -22,14 +22,14 @@ _llm = None
 def get_llm():
     global _llm
     if _llm is None:
-        from langchain_google_genai import ChatGoogleGenerativeAI
+        from langchain_groq import ChatGroq
         import os
         
-        api_key = os.environ.get("GOOGLE_API_KEY")
+        api_key = os.environ.get("GROQ_API_KEY")
         if not api_key:
-            raise ValueError("GOOGLE_API_KEY environment variable is not set. Please configure it in your deployment environment.")
+            raise ValueError("GROQ_API_KEY environment variable is not set. Please configure it in your deployment environment.")
             
-        _llm = ChatGoogleGenerativeAI(model="gemini-pro", api_key=api_key)
+        _llm = ChatGroq(model_name="llama3-8b-8192", groq_api_key=api_key)
     return _llm
 
 def search_node(state: ResearchState) -> ResearchState:
