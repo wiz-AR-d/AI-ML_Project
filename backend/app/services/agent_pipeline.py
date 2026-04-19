@@ -29,7 +29,7 @@ def get_llm():
         if not api_key:
             raise ValueError("GOOGLE_API_KEY environment variable is not set. Please configure it in your deployment environment.")
             
-        _llm = ChatGoogleGenerativeAI(model="gemini-1.5-flash", api_key=api_key)
+        _llm = ChatGoogleGenerativeAI(model="gemini-pro", api_key=api_key)
     return _llm
 
 def search_node(state: ResearchState) -> ResearchState:
