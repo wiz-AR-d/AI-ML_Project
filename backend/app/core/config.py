@@ -11,7 +11,8 @@ class Settings(BaseSettings):
     API_V1_PREFIX: str = "/api/v1"
     ALLOWED_ORIGINS: str = (
         "http://localhost:3000,http://localhost:5173,http://localhost:5174,"
-        "http://localhost:5175,https://ai-ml-project-blue.vercel.app"
+        "http://localhost:5175,https://ai-ml-project-blue.vercel.app,"
+        "https://ai-ml-project-tau.vercel.app"
     )
 
     @property
