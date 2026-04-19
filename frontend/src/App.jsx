@@ -7,7 +7,7 @@ import ReportPanel from './components/ReportPanel';
 
 // Vite proxy forwards /api → http://localhost:8000 in dev
 // Set VITE_API_URL in .env for production (e.g. https://your-app.onrender.com)
-const API_BASE = import.meta.env.VITE_API_URL || '';
+const API_BASE = (import.meta.env.VITE_API_URL || '').replace(/\/$/, "");
 
 export default function App() {
   // ── Mode ──────────────────────────────────────────
