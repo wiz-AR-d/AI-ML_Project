@@ -29,7 +29,7 @@ def get_llm():
         if not api_key:
             raise ValueError("GROQ_API_KEY environment variable is not set. Please configure it in your deployment environment.")
             
-        _llm = ChatGroq(model_name="llama3-8b-8192", groq_api_key=api_key)
+        _llm = ChatGroq(model_name="llama-3.1-8b-instant", groq_api_key=api_key)
     return _llm
 
 def search_node(state: ResearchState) -> ResearchState:
